@@ -1,23 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import NavBar from './components/Navbar';
+import Filter from './components/Filter';
+import MovieList from './components/MovieList';
+import Add from './components/Add';
+import {movies} from './components/Movies';
+import {useState} from 'react';
+import Details from './components/Details';
+import {Route,Switch} from 'react-router-dom';
 
+//console.log(movies);
 function App() {
+const [movieList,setmovieList]=useState(movies)
+console.log(movieList);
+
   return (
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar/>
+      <Filter/>
+      <Add/> 
+      <Switch>
+      
+      <Route exact path="/" render={()=> <MovieList movieList={movieList}  />} />
+      <Route path="/Details/:id" render={ (props) => <Details {...props} list={movies} />   } />
+      </Switch>
     </div>
   );
 }
